@@ -10,8 +10,18 @@ import {
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { API_KEY } from "./config";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const icons = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Rain: "rain",
+  Atomosphere: "cloudy-gusts",
+  Snow: "snow",
+  Drizzle: "rains",
+  Thunderstorm: "lightning",
+};
 
 export default function App() {
   const [ok, setOk] = useState(true);
@@ -69,9 +79,23 @@ export default function App() {
         ) : (
           days.map((day, index) => (
             <View key={index} style={styles.day}>
-              <Text style={styles.temp}>
-                {parseFloat(day.main.temp).toFixed(1)}
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Text style={styles.temp}>
+                  {parseFloat(day.main.temp).toFixed(1)}
+                </Text>
+                <Fontisto
+                  name={icons[day.weather[0].main]}
+                  size={64}
+                  color="white"
+                />
+              </View>
               <Text style={styles.description}>{day.weather[0].main}</Text>
               <Text style={styles.tinyText}>{day.weather[0].description}</Text>
             </View>
